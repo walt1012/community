@@ -8,6 +8,7 @@
 ## 工具
 [UML](https://www.visual-paradigm.com/cn/download/community.jsp)<br>
 [H2数据库](http://www.h2database.com/html/main.html)<br>
+[flyway](https://flywaydb.org/getstarted/firststeps/maven)<br>
 
 ## 脚本
 ```sql
