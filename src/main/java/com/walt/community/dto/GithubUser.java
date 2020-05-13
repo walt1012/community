@@ -10,6 +10,7 @@ public class GithubUser {
     private String name;
     private Long id;
     private String bio;
+    private String avatarUrl;
 
     @Override
     public String toString() {
@@ -17,6 +18,7 @@ public class GithubUser {
                 "name='" + name + '\'' +
                 ", id=" + id +
                 ", bio='" + bio + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
                 '}';
     }
 
@@ -42,5 +44,13 @@ public class GithubUser {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

@@ -40,7 +40,7 @@ public class OAuthController {
     @Value("${github.redirect.uri}")
     private String redirectUri;
 
-    @GetMapping("callback")
+    @GetMapping("/callback")
     public String callBack(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
                            HttpServletResponse response) {
@@ -53,7 +53,8 @@ public class OAuthController {
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
         System.out.println(githubUser.getName());
-        if (githubUser != null) {
+
+        if (githubUser != null && githubUser.getId() != null) {
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
@@ -61,6 +62,7 @@ public class OAuthController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            user.setAvatarUrl(githubUser.getAvatarUrl());
             userMapper.insertUser(user);
 
             response.addCookie(new Cookie("token", token));
