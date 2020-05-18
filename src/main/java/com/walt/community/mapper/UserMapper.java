@@ -7,10 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * @FileName: community
- * @Author: walt1012
- * @Description: TODO
- * @Date: 2020/2/19 8:39 下午
+ * @author: walt1012
+ * @date: 2020/2/19 8:39 下午
  */
 @Mapper
 public interface UserMapper {
