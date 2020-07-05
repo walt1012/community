@@ -5,6 +5,7 @@ import com.walt.community.dto.GithubUser;
 import com.walt.community.mapper.UserMapper;
 import com.walt.community.model.User;
 import com.walt.community.provider.GithubProvider;
+import com.walt.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 /**
  * @FileName: community
  * @Author: walt1012
- * @Description: TODO
  * @Date: 2020/2/17 10:49 下午
  */
 
@@ -40,6 +41,9 @@ public class OAuthController {
     @Value("${github.redirect.uri}")
     private String redirectUri;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/callback")
     public String callBack(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
@@ -52,7 +56,6 @@ public class OAuthController {
         accessTokenDTO.setClient_secret(clientSecret);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
-        System.out.println(githubUser.getName());
 
         if (githubUser != null && githubUser.getId() != null) {
             User user = new User();
@@ -60,17 +63,19 @@ public class OAuthController {
             user.setToken(token);
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(githubUser.getAvatarUrl());
-            userMapper.insertUser(user);
-
+            userService.createOrUpdate(user);
             response.addCookie(new Cookie("token", token));
-
-            return "redirect:/";
-        } else {
-            //登录失败
-            return "redirect:/";
         }
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }
