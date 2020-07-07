@@ -1,10 +1,8 @@
 package com.walt.community.model;
 
 /**
- * @FileName: community
- * @Author: walt1012
- * @Description: TODO
- * @Date: 2020/2/19 8:41 下午
+ * @author: walt1012
+ * @date: 2020/2/19 8:41 下午
  */
 
 public class User {
