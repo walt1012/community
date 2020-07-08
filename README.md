@@ -24,3 +24,6 @@ create table USER
 		primary key (ID)
 );
 ```
+```shell script
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+```
