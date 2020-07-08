@@ -4,6 +4,7 @@ import com.walt.community.dto.PaginationDTO;
 import com.walt.community.dto.QuestionDTO;
 import com.walt.community.exception.CustomizeErrorCode;
 import com.walt.community.exception.CustomizeException;
+import com.walt.community.mapper.QuestionExtMapper;
 import com.walt.community.mapper.QuestionMapper;
 import com.walt.community.mapper.UserMapper;
 import com.walt.community.model.Question;
@@ -26,6 +27,9 @@ public class QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     @Autowired
     private UserMapper userMapper;
@@ -101,7 +105,7 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.selectByPrimaryKey(id);
-        if (question == null){
+        if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         QuestionDTO questionDTO = new QuestionDTO();
@@ -127,9 +131,16 @@ public class QuestionService {
             QuestionExample example = new QuestionExample();
             example.createCriteria().andIdEqualTo(question.getId());
             int update = questionMapper.updateByExampleSelective(updateQuestion, example);
-            if (update != 1){
+            if (update != 1) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
+    }
+
+    public void incView(Integer id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }
