@@ -38,7 +38,7 @@ public class QuestionService {
     public PaginationDTO list(Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
-        Integer totalPage;
+        int totalPage;
         if (totalCount % size == 0) {
             totalPage = totalCount / size;
         } else {
@@ -53,7 +53,7 @@ public class QuestionService {
         }
         paginationDTO.setPagination(totalPage, page);
 
-        Integer offset = size * (page - 1);
+        int offset = size * (page - 1);
         List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         questionList.forEach(a -> {
@@ -73,7 +73,7 @@ public class QuestionService {
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(userId);
         Integer totalCount = (int) questionMapper.countByExample(questionExample);
-        Integer totalPage;
+        int totalPage;
         if (totalCount % size == 0) {
             totalPage = totalCount / size;
         } else {
@@ -88,7 +88,7 @@ public class QuestionService {
         }
         paginationDTO.setPagination(totalPage, page);
 
-        Integer offset = size * (page - 1);
+        int offset = size * (page - 1);
         List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(questionExample, new RowBounds(offset, size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         questionList.forEach(a -> {
