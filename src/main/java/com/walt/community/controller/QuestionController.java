@@ -22,7 +22,7 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping("/question/{id}")
-    public String question(@PathVariable(name = "id") Integer id, Model model, HttpServletRequest request) {
+    public String question(@PathVariable(name = "id") Long id, Model model, HttpServletRequest request) {
         QuestionDTO questionDTO = questionService.getById(id);
         // 累加阅读数
         questionService.incView( id);

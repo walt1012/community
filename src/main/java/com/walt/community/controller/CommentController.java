@@ -1,14 +1,19 @@
 package com.walt.community.controller;
 
 import com.walt.community.dto.CommentDTO;
+import com.walt.community.dto.ResultDTO;
+import com.walt.community.exception.CustomizeErrorCode;
 import com.walt.community.mapper.CommentMapper;
 import com.walt.community.model.Comment;
+import com.walt.community.model.User;
+import com.walt.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,20 +25,23 @@ import java.util.Map;
 public class CommentController {
 
     @Autowired
-    private CommentMapper commentMapper;
+    private CommentService commentService;
 
     @PostMapping(value = "comment")
-    public Object post(@RequestBody CommentDTO commentDTO) {
+    public ResultDTO post(@RequestBody CommentDTO commentDTO, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return ResultDTO.errOf(CustomizeErrorCode.NO_LOGIN);
+        }
         Comment comment = new Comment();
         comment.setParentId(commentDTO.getParentId());
         comment.setContent(commentDTO.getContent());
         comment.setType(commentDTO.getType());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(System.currentTimeMillis());
-        comment.setCommentator(1);
-        commentMapper.insert(comment);
-        Map<Object, Object> map = new HashMap<>();
-        map.put("message","成功");
-        return map;
+        comment.setCommentator(user.getId());
+        comment.setLikeCount(0L);
+        commentService.insert(comment);
+        return ResultDTO.okOf();
     }
 }
