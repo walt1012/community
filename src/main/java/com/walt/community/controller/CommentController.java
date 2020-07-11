@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -27,7 +28,8 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping(value = "comment")
+    @PostMapping(value = "/comment")
+    @ResponseBody
     public ResultDTO post(@RequestBody CommentDTO commentDTO, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
