@@ -34,6 +34,7 @@ body {
 .community-menu {
     color: #999;
     font-size: 13px;
+    margin-bottom: 15px;
 }
 
 .comment {
@@ -43,4 +44,54 @@ body {
 .comment-btn {
     float: right;
     margin-bottom: 10px;
+}
+
+.comments {
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.sub-comments {
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
+.sub-comments .btn {
+    margin: 10px 0;
+}
+
+.menu {
+    color: #999;
+    margin-top: 5px;
+}
+
+.menu .icon {
+    margin-right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.menu .comment-icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.menu .comment-icon:hover {
+    color: #499ef3;
+}
+
+.menu .active {
+    color: #499ef3;
+}
+
+.menu .icon:hover {
+    color: #499ef3;
+}
+
+.question-title {
+    margin-top: 25px;
 }
