@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
-    <script type="application/javascript" src="js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="/js/jquery-3.5.1.min.js"></script>
+    <script type="application/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="/js/community.js"></script>
 </head>
 <body>
 <div th:insert="navigation :: nav"></div>
@@ -31,7 +33,32 @@
                 <div class="form-group">
                     <label for="tag">添加标签:</label>
                     <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag"
-                           placeholder="输入标签,以逗号隔开">
+                           placeholder="输入标签,以逗号隔开" onclick="showSelectTag()" autocomplete="off">
+                    <div id="select-tag" class="publish-tag-tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" th:each="selectCategory,selectCategoryStat:${tags}"
+                                th:class="${selectCategoryStat.first?'active':''}">
+                                <a th:href="${'#'+selectCategory.getCategoryName()}" aria-controls="" role="tab"
+                                   data-toggle="tab"
+                                   th:text="${selectCategory.getCategoryName()}"></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" th:id="${selectCategory.getCategoryName()}" th:each="selectCategory:${tags}"
+                                 th:class="${selectCategoryStat.first?'active tab-pane':'tab-pane'}">
+                                      <span class="label label-info" th:each="selectTag:${selectCategory.getTags()}">
+                                          <span onclick="selectTag(this)" th:data-tag="${selectTag}">
+                                              <span class="glyphicon glyphicon-tags question-tag"></span>
+                                              <span th:text="${selectTag}"></span>
+                                          </span>
+                                      </span>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="profile">
+                                    <span class="label label-info"><span class="glyphicon glyphicon-tags"
+                                                                         onclick="selectTag('java')">Java</span></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="container-fluid main">
                     <div class="row">
