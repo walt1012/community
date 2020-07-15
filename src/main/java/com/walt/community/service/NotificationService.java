@@ -34,6 +34,7 @@ public class NotificationService {
         PaginationDTO<NotificationDTO> paginationDTO = new PaginationDTO<>();
         NotificationExample notificationExample = new NotificationExample();
         notificationExample.createCriteria().andReciverEqualTo(userId);
+        notificationExample.setOrderByClause("gmt_create desc");
         Integer totalCount = (int) notificationMapper.countByExample(notificationExample);
         int totalPage;
         if (totalCount % size == 0) {

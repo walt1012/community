@@ -3,6 +3,7 @@ package com.walt.community.interceptor;
 import com.walt.community.mapper.UserMapper;
 import com.walt.community.model.User;
 import com.walt.community.model.UserExample;
+import com.walt.community.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -24,6 +25,9 @@ public class SessionInceptor implements HandlerInterceptor {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
@@ -36,6 +40,8 @@ public class SessionInceptor implements HandlerInterceptor {
                     List<User> userList = userMapper.selectByExample(example);
                     if (userList != null && userList.size() != 0) {
                         request.getSession().setAttribute("user", userList.get(0));
+                        Long unreadCount = notificationService.unreadCount(userList.get(0).getId());
+                        request.getSession().setAttribute("unreadMessageCount", unreadCount);
                     }
                     break;
                 }
