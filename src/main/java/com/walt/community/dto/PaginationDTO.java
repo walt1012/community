@@ -7,8 +7,8 @@ import java.util.List;
  * @author: walt1012
  * @date: 2020/5/14
  */
-public class PaginationDTO {
-    private List<QuestionDTO> questionDTOList;
+public class PaginationDTO<T> {
+    private List<T> data;
     private boolean showPrevious;
     private boolean showFirstPage;
     private boolean showNext;
@@ -17,12 +17,12 @@ public class PaginationDTO {
     private List<Integer> pages = new ArrayList<>();
     private Integer totalPage;
 
-    public List<QuestionDTO> getQuestionDTOList() {
-        return questionDTOList;
+    public List<T> getData() {
+        return data;
     }
 
-    public void setQuestionDTOList(List<QuestionDTO> questionDTOList) {
-        this.questionDTOList = questionDTOList;
+    public void setData(List<T> data) {
+        this.data = data;
     }
 
     public boolean isShowPrevious() {
