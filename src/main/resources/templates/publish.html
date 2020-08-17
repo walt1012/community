@@ -6,9 +6,11 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/editormd.min.css">
     <script type="application/javascript" src="/js/jquery-3.5.1.min.js"></script>
     <script type="application/javascript" src="/js/bootstrap.min.js"></script>
     <script type="application/javascript" src="/js/community.js"></script>
+    <script type="application/javascript" src="/js/editormd.min.js"></script>
 </head>
 <body>
 <div th:insert="navigation :: nav"></div>
@@ -24,12 +26,23 @@
                     <input type="text" class="form-control" id="title" th:value="${title}" name="title"
                            placeholder="问题标题">
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="question-editor">
                     <label for="description">问题补充(请参照右侧提示):</label>
                     <textarea class="form-control" id="description" th:text="${description}" name="description"
-                              rows="10"
-                              cols="30"></textarea>
+                              rows="10" cols="30" style="display:none;"></textarea>
                 </div>
+                <script type="text/javascript">
+                    $(function () {
+                        var editor = editormd("question-editor", {
+                            width: "100%",
+                            height: 350,
+                            path: "/js/lib/",
+                            delay: 0,
+                            watch: false,
+                            placeholder: "请输入问题描述"
+                        });
+                    });
+                </script>
                 <div class="form-group">
                     <label for="tag">添加标签:</label>
                     <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag"
@@ -44,7 +57,8 @@
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div role="tabpanel" th:id="${selectCategory.getCategoryName()}" th:each="selectCategory:${tags}"
+                            <div role="tabpanel" th:id="${selectCategory.getCategoryName()}"
+                                 th:each="selectCategory:${tags}"
                                  th:class="${selectCategoryStat.first?'active tab-pane':'tab-pane'}">
                                       <span class="label label-info" th:each="selectTag:${selectCategory.getTags()}">
                                           <span onclick="selectTag(this)" th:data-tag="${selectTag}">
