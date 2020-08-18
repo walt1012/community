@@ -4,6 +4,7 @@
 [spring 文档](https://spring.io/guides)<br>
 [bootstrap 文档](https://v3.bootcss.com/components/#navbar)<br>
 [github OAuth 文档](https://developer.github.com/apps/building-oauth-apps/)<br>
+[markdown 插件](http://editor.md.ipandao.com/)<br>
 
 ## 工具
 [UML](https://www.visual-paradigm.com/cn/download/community.jsp)<br>
