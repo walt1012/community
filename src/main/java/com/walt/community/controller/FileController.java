@@ -17,7 +17,7 @@ public class FileController {
     public FileDTO upload() {
         FileDTO fileDTO = new FileDTO();
         fileDTO.setSuccess(1);
-        fileDTO.setUrl("http://localhost:8887/images/WechatIMG88.jpeg");
+        fileDTO.setUrl("/images/WechatIMG88.jpeg");
         return fileDTO;
     }
 }
