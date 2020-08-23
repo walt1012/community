@@ -1,0 +1,7 @@
+# QingStor services configuration
+qstore:
+ access_key_id: 'IYLBXWRMDAIFQLPWQVYJ'
+ secret_access_key: 'ytdgRbjnkQshqhogOMbIrH2zhu5pCr9QVz02EGNo'
+ zone-name: 'sh1a'
+ bucket-name: 'walt-community'
+ connection_retries: 3
