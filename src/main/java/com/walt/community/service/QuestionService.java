@@ -2,6 +2,7 @@ package com.walt.community.service;
 
 import com.walt.community.dto.PaginationDTO;
 import com.walt.community.dto.QuestionDTO;
+import com.walt.community.dto.QuestionQueryDTO;
 import com.walt.community.exception.CustomizeErrorCode;
 import com.walt.community.exception.CustomizeException;
 import com.walt.community.mapper.QuestionExtMapper;
@@ -38,9 +39,15 @@ public class QuestionService {
     private UserMapper userMapper;
 
 
-    public PaginationDTO<QuestionDTO> list(Integer page, Integer size) {
+    public PaginationDTO<QuestionDTO> list(String search, Integer page, Integer size) {
+        if (StringUtils.isNoneBlank(search)){
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
-        Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setSearch(search);
+        Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
         int totalPage;
         if (totalCount % size == 0) {
             totalPage = totalCount / size;
@@ -59,7 +66,9 @@ public class QuestionService {
         int offset = size * (page - 1);
         QuestionExample example = new QuestionExample();
         example.setOrderByClause("gmt_create desc");
-        List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(example, new RowBounds(offset, size));
+        questionQueryDTO.setSize(size);
+        questionQueryDTO.setPage(offset);
+        List<Question> questionList = questionExtMapper.selectBySearch(questionQueryDTO);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         questionList.forEach(a -> {
             User user = userMapper.selectByPrimaryKey(a.getCreator());

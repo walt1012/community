@@ -122,3 +122,8 @@ body {
     white-space: normal;
     display: inline-block;
 }
+
+.footer {
+    padding: 10px 35%;
+    color: #666;
+}

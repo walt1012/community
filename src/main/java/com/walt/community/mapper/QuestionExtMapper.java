@@ -1,5 +1,6 @@
 package com.walt.community.mapper;
 
+import com.walt.community.dto.QuestionQueryDTO;
 import com.walt.community.model.Question;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,4 +13,8 @@ public interface QuestionExtMapper {
     int incCommentCount(Question record);
 
     List<Question> selectRelated(Question question);
+
+    Integer countBySearch(QuestionQueryDTO questionQueryDTO);
+
+    List<Question> selectBySearch(QuestionQueryDTO questionQueryDTO);
 }

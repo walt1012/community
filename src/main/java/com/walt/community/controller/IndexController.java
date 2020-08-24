@@ -1,6 +1,7 @@
 package com.walt.community.controller;
 
 import com.walt.community.dto.PaginationDTO;
+import com.walt.community.dto.QuestionDTO;
 import com.walt.community.model.User;
 import com.walt.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,12 @@ public class IndexController {
     @GetMapping("/")
     public String index(HttpServletRequest request, Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
-                        @RequestParam(name = "size", defaultValue = "5") Integer size) {
+                        @RequestParam(name = "size", defaultValue = "5") Integer size,
+                        @RequestParam(name = "search", required = false) String search) {
 
-        PaginationDTO paginationDTO = questionService.list(page, size);
+        PaginationDTO<QuestionDTO> paginationDTO = questionService.list(search, page, size);
         model.addAttribute("paginationDTO", paginationDTO);
-
+        model.addAttribute("search", search);
         return "index";
     }
 }
