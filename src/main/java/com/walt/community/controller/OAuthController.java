@@ -6,6 +6,8 @@ import com.walt.community.mapper.UserMapper;
 import com.walt.community.model.User;
 import com.walt.community.provider.GithubProvider;
 import com.walt.community.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ import java.util.UUID;
 
 @Controller
 public class OAuthController {
+
+    private static final Logger log = LoggerFactory.getLogger(OAuthController.class);
 
     @Autowired
     private GithubProvider githubProvider;
@@ -67,6 +71,7 @@ public class OAuthController {
             userService.createOrUpdate(user);
             response.addCookie(new Cookie("token", token));
         }
+        log.error("callback get github error, {}", githubUser);
         return "redirect:/";
     }
 
