@@ -72,7 +72,7 @@ public class OAuthController {
             response.addCookie(new Cookie("token", token));
         }
         log.error("callback get github error, {}", githubUser);
-        return "redirect:/";
+        return "redirect:/index";
     }
 
     @GetMapping("/logout")
@@ -81,6 +81,6 @@ public class OAuthController {
         Cookie cookie = new Cookie("token", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        return "redirect:/";
+        return "redirect:/index";
     }
 }
