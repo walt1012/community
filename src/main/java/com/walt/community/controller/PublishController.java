@@ -31,7 +31,7 @@ public class PublishController {
     @GetMapping("/publish")
     public String publish(Model model) {
         model.addAttribute("tags", TagCache.get());
-        return "publish";
+        return "/publish";
     }
 
     @GetMapping("/publish/{id}")
@@ -41,7 +41,7 @@ public class PublishController {
         model.addAttribute("description", question.getDescription());
         model.addAttribute("tag", question.getTag());
         model.addAttribute("id", question.getId());
-        return "publish";
+        return "/publish";
     }
 
     @PostMapping("/publish")
@@ -59,27 +59,27 @@ public class PublishController {
 
         if (!StringUtils.isNotEmpty(title)) {
             model.addAttribute("error", "标题不能为空");
-            return "publish";
+            return "/publish";
         }
         if (!StringUtils.isNotEmpty(description)) {
             model.addAttribute("error", "问题补充不能为空");
-            return "publish";
+            return "/publish";
         }
         if (!StringUtils.isNotEmpty(tag)) {
             model.addAttribute("error", "标签不能为空");
-            return "publish";
+            return "/publish";
         }
 
         String invalid = TagCache.filterInvalid(tag);
         if (StringUtils.isNotBlank(invalid)) {
             model.addAttribute("error", "输入非法标签: " + invalid);
-            return "publish";
+            return "/publish";
         }
 
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "用户未登录");
-            return "publish";
+            return "/publish";
         }
         Question question = new Question();
         question.setId(id);

@@ -21,7 +21,7 @@ public class CustomizeErrorController implements ErrorController {
     @Override
     public String getErrorPath() {
 
-        return "error";
+        return "/error";
     }
 
     @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
@@ -33,7 +33,7 @@ public class CustomizeErrorController implements ErrorController {
         if (status.is5xxServerError()){
             model.addAttribute("message","服务器冒烟了");
         }
-        return new ModelAndView("error");
+        return new ModelAndView("/error");
     }
 
     protected HttpStatus getStatus(HttpServletRequest request) {

@@ -34,7 +34,7 @@ public class ProfileController {
                           @RequestParam(value = "size", defaultValue = "5") Integer size) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
-            return "redirct:";
+            return "redirct:/";
         }
 
         if ("questions".equals(action)) {
@@ -51,7 +51,7 @@ public class ProfileController {
 
         PaginationDTO<QuestionDTO> paginationDTO = questionService.list(user.getId(), page, size);
         model.addAttribute("paginationDTO", paginationDTO);
-        return "profile";
+        return "/profile";
     }
 
 }
