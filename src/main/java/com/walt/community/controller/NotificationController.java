@@ -26,7 +26,7 @@ public class NotificationController {
     private String profile(HttpServletRequest request, @PathVariable(name = "id") Long id) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
-            return "redirect:/";
+            return "redirect:";
         }
         NotificationDTO notificationDTO = notificationService.read(id, user);
         if (NotificationTypeEnum.REPLY_COMMENT.getType() == notificationDTO.getType()
