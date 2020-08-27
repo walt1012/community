@@ -82,7 +82,7 @@
                             </h5>
                             <div th:text="${comment.content}"></div>
                             <div class="menu">
-                                <span class="glyphicon glyphicon-thumbs-up icon"></span>
+                                <!-- <span class="glyphicon glyphicon-thumbs-up icon"></span> -->
                                 <span th:data-id="${comment.getId()}" onclick="collapseComments(this)">
                                     <span class="glyphicon glyphicon-comment comment-icon"></span>
                                     <span th:text="${comment.getCommentCount()}"></span>
