@@ -34,7 +34,7 @@ public class ProfileController {
                           @RequestParam(value = "size", defaultValue = "5") Integer size) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
-            return "redirect:/index";
+            return "redirect:/first";
         }
 
         if ("questions".equals(action)) {
