@@ -72,7 +72,7 @@ public class OAuthController {
             response.addCookie(new Cookie("token", token));
         }
         log.error("callback get github error, {}", githubUser);
-        return "redirect:";
+        return "redirect:/";
     }
 
     @GetMapping("/logout")
