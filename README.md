@@ -1,7 +1,9 @@
 ## walt社区
 
 ## 部署
-
+```shell script
+java -jar -Dspring.profiles.active=application-production.properties target/community-0.0.1-SNAPSHOT.jar
+```
 
 ## 资料
 [spring 文档](https://spring.io/guides)<br>
