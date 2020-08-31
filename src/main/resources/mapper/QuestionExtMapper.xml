@@ -18,23 +18,23 @@
         <result column="TAG" jdbcType="VARCHAR" property="tag"/>
     </resultMap>
     <update id="incView" parameterType="com.walt.community.model.Question">
-        update QUESTION
+        update question
         set VIEW_COUNT = VIEW_COUNT + #{viewCount,jdbcType=INTEGER}
         where ID = #{id}
     </update>
     <update id="incCommentCount" parameterType="com.walt.community.model.Question">
-        update QUESTION
+        update question
         set COMMENT_COUNT = COMMENT_COUNT + #{commentCount,jdbcType=INTEGER}
         where ID = #{id}
     </update>
     <select id="selectRelated" parameterType="com.walt.community.model.Question" resultMap="BaseResultMap">
         select *
-        from QUESTION
+        from question
         where ID != #{id}
           and tag regexp #{tag}
     </select>
     <select id="countBySearch" parameterType="com.walt.community.dto.QuestionQueryDTO" resultType="java.lang.Integer">
-        select count(*) from QUESTION
+        select count(*) from question
         <where>
             <if test="search != null and search != ''">
                 and TITLE regexp #{search}
@@ -42,10 +42,10 @@
         </where>
     </select>
     <select id="selectBySearch" parameterType="com.walt.community.dto.QuestionQueryDTO" resultMap="BaseResultMap">
-        select * from QUESTION
+        select * from question
         <where>
             <if test="search != null and search != ''">
-                and TITLE regexp #{search}
+                and title regexp #{search}
             </if>
         </where>
         order by gmt_create desc limit #{page},#{size}
