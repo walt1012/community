@@ -6,6 +6,7 @@ package com.walt.community.dto;
  */
 public class QuestionQueryDTO {
     private String search;
+    private String tag;
     private Integer page;
     private Integer size;
 
@@ -15,6 +16,14 @@ public class QuestionQueryDTO {
 
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public Integer getPage() {
